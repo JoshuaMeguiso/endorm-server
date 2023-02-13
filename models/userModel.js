@@ -75,7 +75,7 @@ userSchema.statics.door = async function(user_Name, password) {
     throw Error('Incorrect Username or Password')
   }
 
-  const checkPaymentStatus = await Transaction.findOne({tenant_ID: user_Name, status: "false"})
+  const checkPaymentStatus = await Transaction.find({tenant_ID: user_Name, status: "false"})
   if(checkPaymentStatus){
     throw Error('May ara balayran!')
   }
