@@ -3,10 +3,6 @@ const Transaction = require('../models/transactionModel')
 const Tenant = require('../models/tenantModel')
 const Room = require('../models/roomModel')
 const Payment = require('../models/paymentModel')
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken);
-
 //GET all transaction
 const getTransactions = async (req, res) => {
     const transaction = await Transaction.find({}).sort({createdAt: -1})
@@ -61,17 +57,11 @@ const createTransaction = async(req, res) => {
         if( checkBalance <= 0 ){
             const transactionUpdate = await Transaction.findOneAndUpdate({tenant_ID, status}, {status : "true"})
             const tenantUpdateBalance = await Tenant.findOneAndUpdate({tenant_ID}, {balance : (checkBalance).toString()})
-            sendMessage(
-                `Good Day ${tenant[0].first_Name}!`,
-                '+16292588940', tenant[0].contact_Info)
 
             res.status(200).json(transaction && tenantUpdate && tenantUpdateBalance && transactionUpdate)
         }
         else{
             const transactionUpdate = await Transaction.findOneAndUpdate({tenant_ID, status}, {total_Amount : checkBalance.toString()})
-            sendMessage(
-                `Good Day ${tenant[0].first_Name}!`, 
-                '+16292588940', tenant[0].contact_Info)
 
             res.status(200).json(transaction && tenantUpdate && transactionUpdate)  
         }
@@ -135,17 +125,6 @@ const updateTransaction = async(req,res) => {
     } catch (error) {
         res.json({error: error.message})
     }
-}
-
-function sendMessage(message, sender, reciever){
-    client.messages 
-        .create({ 
-            body: message,    
-            from: sender,
-            to: reciever
-        }) 
-        .then(message => console.log(message.sid)) 
-        .done();
 }
 
 module.exports = {
