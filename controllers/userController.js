@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -16,7 +17,10 @@ const loginDoor = async (req, res) => {
     const userName = user.user_Name
     const pass = user.password
 
-    res.status(200).json({userName, pass})
+    const tenant = await Tenant.find({tenant_ID : userName})
+    const room = tenant[0].room_ID
+
+    res.status(200).json({user_Name: userName, password: pass, room_ID: room})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
