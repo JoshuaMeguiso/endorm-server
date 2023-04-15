@@ -89,16 +89,15 @@ userSchema.statics.door = async function(rfid, room_ID) {
   const tenant = await Tenant.find({tenant_ID : card.user_Name})
   const room = tenant[0].room_ID
 
-  const dueDate = new Date(checkPaymentStatus.start_Month);
-  dueDate.setMonth(dueDate.getMonth() + 1);     // Add a month to the due date
-  dueDate.setDate(dueDate.getDate() + 7);       // Add 7 days to the due date
-
-  const currentDate = new Date();
-
   if(room_ID != room){
     throw Error('Wrong Room')
   }
   if(checkPaymentStatus){
+    const dueDate = new Date(checkPaymentStatus.start_Month);
+    dueDate.setMonth(dueDate.getMonth() + 1);     // Add a month to the due date
+    dueDate.setDate(dueDate.getDate() + 7);       // Add 7 days to the due date
+    const currentDate = new Date();
+
     if(dueDate.getDate() < currentDate.getDate()){
       throw Error('Unpaid Bills')
     }
