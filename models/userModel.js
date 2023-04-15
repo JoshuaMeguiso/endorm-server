@@ -1,3 +1,4 @@
+const Tenant = require('../models/tenantModel')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
@@ -18,6 +19,11 @@ const userSchema = new Schema({
   user_Type: {
     type: String,
     require: true
+  },
+  rfid: {
+    type: String,
+    require: false,
+    unique: true
   }
 })
 
@@ -38,7 +44,7 @@ userSchema.statics.signup = async function(user_Name, password, user_Type) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({ user_Name, password: hash, user_Type })
+  const user = await this.create({ user_Name, password: hash, user_Type, rfid : "" })
 
   return user
 }
@@ -62,25 +68,43 @@ userSchema.statics.login = async function(user_Name, password) {
   return user
 }
 
+// static card method
+userSchema.statics.loginCard = async function( rfid ) {
+  const card = await this.findOne({ rfid })
+  if (!card) {
+    throw Error('No Registered Card')
+  }
+
+  return card
+}
+
 // static login  door method
-userSchema.statics.door = async function(user_Name, password) {
-
-  const user = await this.findOne({ user_Name })
-  if (!user) {
-    throw Error('User not Found')
+userSchema.statics.door = async function(rfid, room_ID) {
+  const card = await this.findOne({ rfid })
+  if (!card) {
+    throw Error('No Registered Card')
   }
 
-  const match = await bcrypt.compare(password, user.password)
-  if (!match) {
-    throw Error('Incorrect Username or Password')
-  }
+  const checkPaymentStatus = await Transaction.findOne({tenant_ID: card.user_Name, status: "false"})
+  const tenant = await Tenant.find({tenant_ID : card.user_Name})
+  const room = tenant[0].room_ID
 
-  const checkPaymentStatus = await Transaction.findOne({tenant_ID: user_Name, status: "false"})
+  const dueDate = new Date(checkPaymentStatus.start_Month);
+  dueDate.setMonth(dueDate.getMonth() + 1);     // Add a month to the due date
+  dueDate.setDate(dueDate.getDate() + 7);       // Add 7 days to the due date
+
+  const currentDate = new Date();
+
+  if(room_ID != room){
+    throw Error('Wrong Room')
+  }
   if(checkPaymentStatus){
-    throw Error('May ara balayran!')
+    if(dueDate.getDate() < currentDate.getDate()){
+      throw Error('Unpaid Bills')
+    }
   }
 
-  return user
+  return card
 }
 
 module.exports = mongoose.model('User', userSchema)

@@ -1,5 +1,4 @@
 const User = require('../models/userModel')
-const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -9,18 +8,12 @@ const createToken = (_id) => {
 
 //login thru door
 const loginDoor = async (req, res) => {
-  const {user_Name, password} = req.body
+  const {rfid, room_ID} = req.params
 
   try {
-    const user = await User.door(user_Name, password)
+    const user = await User.door(rfid, room_ID)
 
-    const userName = user.user_Name
-    const pass = user.password
-
-    const tenant = await Tenant.find({tenant_ID : userName})
-    const room = tenant[0].room_ID
-
-    res.status(200).json({user_Name: userName, password: pass, room_ID: room})
+    res.status(200).json({message: "ok"})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -37,6 +30,22 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id)
 
     res.status(200).json({user_Name, token, user_Type: user.user_Type})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+// login card a user
+const loginUserCard = async (req, res) => {
+  const { rfid } = req.params
+  
+  try {
+    const user = await User.loginCard(rfid)
+
+    // create a token
+    const token = createToken(user._id)
+
+    res.status(200).json({user_Name: user.user_Name, token, user_Type: user.user_Type})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -78,5 +87,22 @@ const updateUser = async (req, res) => {
     res.status(400).json({error: error.message})
   }
 }
+const updateUserCard = async (req, res) => {
+  const { user_Name } = req.params
+  const { rfid } = req.body
 
-module.exports = { signupUser, loginUser, loginDoor, updateUser }
+  try {
+    const check = await User.findOne({user_Name, rfid});
+    if(check){
+      throw Error("Already Registered")
+    }
+    const user = await User.findOneAndUpdate({user_Name}, {rfid})
+    
+
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+module.exports = { signupUser, loginUser, loginDoor, updateUser, updateUserCard, loginUserCard }
