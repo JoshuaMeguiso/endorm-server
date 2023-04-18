@@ -14,6 +14,10 @@ const app = express()
 // middleware
 app.use(express.json()) 
 
+//Disable Redirection
+app.set("trust proxy", false);
+app.set("trustProxy", false);
+
 // routes
 app.use('/tenant', tenantRoutes)
 app.use('/user', userRoutes)
