@@ -8,7 +8,8 @@ const createToken = (_id) => {
 
 //login thru door
 const loginDoor = async (req, res) => {
-  const {rfid, room_ID} = req.params
+  const { room_ID } = req.params
+  const { rfid } = req.body
 
   try {
     const user = await User.door(rfid, room_ID)

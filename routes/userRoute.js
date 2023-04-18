@@ -6,7 +6,7 @@ const { loginDoor, loginUser, loginUserCard, signupUser, updateUser, updateUserC
 const router = express.Router()
 
 // login door route
-router.post('/:rfid/:room_ID', loginDoor)
+router.post('/door/:room_ID', loginDoor)
 
 // login route
 router.post('/login', loginUser)
