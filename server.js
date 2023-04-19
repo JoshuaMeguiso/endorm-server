@@ -13,6 +13,12 @@ const app = express()
 
 // middleware
 app.use(express.json()) 
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    req.headers['x-forwarded-proto'] = 'https';
+  }
+  next();
+});
 
 //Disable Redirection
 app.set("trust proxy", false);

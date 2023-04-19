@@ -12,7 +12,7 @@ router.post('/door/:room_ID', loginDoor)
 router.post('/login', loginUser)
 
 // login card route
-router.post('/:rfid', loginUserCard)
+router.post('/login/card', loginUserCard)
 
 // signup route
 router.post('/signup', signupUser)

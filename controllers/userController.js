@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
 
 // login card a user
 const loginUserCard = async (req, res) => {
-  const { rfid } = req.params
+  const { rfid } = req.body
   
   try {
     const user = await User.loginCard(rfid)
