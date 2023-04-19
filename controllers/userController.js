@@ -1,9 +1,41 @@
 const User = require('../models/userModel')
+const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
+}
+
+//get room and uid
+const getRoom = async (req, res) => {
+
+  try{
+    const user = await User.find({})
+    let compareCount = await User.countDocuments({});
+    let count = 0;
+    let data = []
+    
+    while(count < compareCount){
+      if(user[count] != null){
+        let tenant = await Tenant.find({tenant_ID : user[count].user_Name})
+        if(tenant[0] != null){
+          let obj = {
+            room_ID : tenant[0].room_ID,
+            rfid : user[count].rfid
+          }
+          data.push(obj);
+          count++;
+        }
+        else{
+          break
+        }  
+      }
+    }
+    res.status(200).json({data})
+  } catch (error) {
+      res.status(400).json({error: error.message})
+  }
 }
 
 //login thru door
@@ -106,4 +138,4 @@ const updateUserCard = async (req, res) => {
   }
 }
 
-module.exports = { signupUser, loginUser, loginDoor, updateUser, updateUserCard, loginUserCard }
+module.exports = { signupUser, loginUser, loginDoor, updateUser, updateUserCard, loginUserCard, getRoom }

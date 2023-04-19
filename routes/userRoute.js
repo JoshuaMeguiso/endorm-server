@@ -1,9 +1,12 @@
 const express = require('express')
 
 // controller functions
-const { loginDoor, loginUser, loginUserCard, signupUser, updateUser, updateUserCard  } = require('../controllers/userController')
+const { loginDoor, loginUser, loginUserCard, signupUser, updateUser, updateUserCard, getRoom  } = require('../controllers/userController')
 
 const router = express.Router()
+
+//get room and uid
+router.get('/room', getRoom)
 
 // login door route
 router.post('/door/:room_ID', loginDoor)
