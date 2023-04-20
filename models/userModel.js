@@ -98,11 +98,10 @@ userSchema.statics.door = async function(rfid, room_ID) {
     dueDate.setDate(dueDate.getDate() + 7);       // Add 7 days to the due date
     const currentDate = new Date();
 
-    if(dueDate.getDate() < currentDate.getDate()){
+    if(dueDate.getTime() < currentDate.getTime()){
       throw Error('Unpaid Bills')
     }
   }
-
   return card
 }
 
