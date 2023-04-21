@@ -22,8 +22,7 @@ const userSchema = new Schema({
   },
   rfid: {
     type: String,
-    require: false,
-    unique: true
+    require: false
   }
 })
 

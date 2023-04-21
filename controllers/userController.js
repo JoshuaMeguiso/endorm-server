@@ -125,13 +125,14 @@ const updateUserCard = async (req, res) => {
   const { rfid } = req.body
 
   try {
-    const check = await User.findOne({user_Name, rfid});
+    const check = await User.findOne({rfid});
     if(check){
-      throw Error("Already Registered")
+      if(check.rfid != ""){
+        throw Error("Already Registered")
+      }
     }
     const user = await User.findOneAndUpdate({user_Name}, {rfid})
     
-
     res.status(200).json(user)
   } catch (error) {
     res.status(400).json({error: error.message})
