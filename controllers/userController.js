@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const { response } = require('express')
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -45,8 +46,37 @@ const loginDoor = async (req, res) => {
 
   try {
     const user = await User.door(rfid, room_ID)
+    const now = new Date();
+    const currentDate = now.toLocaleDateString();
+    const currentTime = now.toLocaleTimeString();
 
-    res.status(200).json({message: "ok"})
+    const message = `This is to inform you that the room has been accessed on ${currentDate} - ${currentTimew}`
+    let API = `https://api.semaphore.co/api/v4/messages?apikey=${process.env.SMSAPIKEY}&number=`
+
+    const tenant = await Tenant.find({room_ID})
+    const countDocuments = await Tenant.countDocuments({room_ID})
+    let count = 0;
+
+    while(count < countDocuments){
+      if(count != 0){
+        API = API + `,0${tenant[count].contact_Info.slice(3)}`
+      }
+      else{
+        API = API + `0${tenant[count].contact_Info.slice(3)}`
+      }
+      
+      count++;
+    }
+    API = API + `&message=${message}`
+    try{
+      const response = await fetch(API, {
+        method: 'POST'
+      });
+    }catch(error){
+      console.log(error.message)
+    }
+    
+    res.status(200).json({messsage: "ok"})
   } catch (error) {
     res.status(400).json({error: error.message})
   }

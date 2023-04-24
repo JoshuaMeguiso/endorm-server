@@ -3,6 +3,16 @@ const Transaction = require('../models/transactionModel')
 const Tenant = require('../models/tenantModel')
 const Room = require('../models/roomModel')
 const Payment = require('../models/paymentModel')
+const Token = require('../models/tokenModel')
+
+//Firebase Database
+var admin = require("firebase-admin");
+var serviceAccount = require("../config/privateKey.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+})
+const messaging = admin.messaging()
+
 //GET all transaction
 const getTransactions = async (req, res) => {
     const transaction = await Transaction.find({}).sort({createdAt: -1})
@@ -28,13 +38,16 @@ const createTransaction = async(req, res) => {
         const tenant = await Tenant.find({tenant_ID})
         const room_ID = tenant[0].room_ID
         const room = await Room.find({room_ID})
-
         const room_Rate = parseFloat(room[0].room_Rate)
         const consume_Reading = present_Reading - previous_Reading
         const total_Consume = parseFloat(consume_Reading*0.4)
         const individual_Consume = (parseFloat(total_Consume)/parseInt(room[0].room_Occupancy))
         const total_Amount = parseFloat(room_Rate) + parseFloat(water_Charge) + parseFloat(individual_Consume)
         const checkBalance =  parseFloat(total_Amount) + parseFloat(tenant[0].balance)
+        const date = new Date(start_Month);
+        const billMonth = date.toLocaleString('en-US', { month: 'long' });
+        date.setMonth(date.getMonth() + 1);
+        const dueDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         
         const transaction = await Transaction.create({
             tenant_Name: tenant[0].first_Name + " " + tenant[0].last_Name,
@@ -65,6 +78,33 @@ const createTransaction = async(req, res) => {
 
             res.status(200).json(transaction && tenantUpdate && transactionUpdate)  
         }
+
+        //Send Push Notification
+        const tokenData =  await Token.find({tenant_ID});
+        const registrationToken = tokenData[0].token;
+        const message = {
+            notification: {
+                title: 'Statement Update!',
+                body: `Your new due is ${total_Amount} pesos on ${dueDate}`
+            },
+            token: registrationToken
+        };
+        try {
+            const response = await admin.messaging().send(message);
+            console.log('Successfully sent test message:', response);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        
+        //Send to Raspberry Pi > PIC > GSM
+        const response = await fetch('http://192.168.1.56:8000/send_string', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\x0D`
+            })
+        })
+        const json = await response.json()
     } catch (error) {
         res.json({error: error.message})
     }

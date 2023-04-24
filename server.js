@@ -7,22 +7,13 @@ const tenantRoutes = require('./routes/tenantRoute')
 const roomRoutes = require('./routes/roomRoute')
 const transactionRoutes = require('./routes/transactionRoutes')
 const paymentRoutes = require('./routes/paymentRoutes')
+const tokenRoutes = require('./routes/tokenRoute')
 
 // express app
 const app = express()
 
 // middleware
 app.use(express.json()) 
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    req.headers['x-forwarded-proto'] = 'https';
-  }
-  next();
-});
-
-//Disable Redirection
-app.set("trust proxy", false);
-app.set("trustProxy", false);
 
 // routes
 app.use('/tenant', tenantRoutes)
@@ -30,6 +21,7 @@ app.use('/user', userRoutes)
 app.use('/room', roomRoutes)
 app.use('/transaction', transactionRoutes)
 app.use('/payment', paymentRoutes)
+app.use('/token', tokenRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
