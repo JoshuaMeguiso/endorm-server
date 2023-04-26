@@ -50,7 +50,7 @@ const loginDoor = async (req, res) => {
     const currentDate = now.toLocaleDateString();
     const currentTime = now.toLocaleTimeString();
 
-    const message = `This is to inform you that the room has been accessed on ${currentDate} - ${currentTimew}`
+    const message = `This is to inform you that the room has been accessed on ${currentDate} - ${currentTime}`
     let API = `https://api.semaphore.co/api/v4/messages?apikey=${process.env.SMSAPIKEY}&number=`
 
     const tenant = await Tenant.find({room_ID})
