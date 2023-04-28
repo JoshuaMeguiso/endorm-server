@@ -97,7 +97,7 @@ const createTransaction = async(req, res) => {
         }
         
         //Send to Raspberry Pi > PIC > GSM
-        const response = await fetch('http://192.168.1.56:8000/send_string', {
+        const response = await fetch('http://192.168.254.195:8000/send_string', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
