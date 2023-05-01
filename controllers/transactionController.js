@@ -4,6 +4,7 @@ const Tenant = require('../models/tenantModel')
 const Room = require('../models/roomModel')
 const Payment = require('../models/paymentModel')
 const Token = require('../models/tokenModel')
+const axios = require('axios');
 
 //Firebase Database
 var admin = require("firebase-admin");
@@ -97,13 +98,16 @@ const createTransaction = async(req, res) => {
         }
         
         //Send to Raspberry Pi > PIC > GSM
-        const response = await fetch('http://192.168.254.195:8000/send_string', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\x0D`
+        axios.post('http://192.168.254.195:8000/send_string', {
+                command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
             })
-        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            }
+        );
         const json = await response.json()
     } catch (error) {
         res.json({error: error.message})
