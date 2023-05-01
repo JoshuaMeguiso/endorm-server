@@ -40,6 +40,7 @@ const createTenant = async(req, res) => {
 const deleteTenant = async(req,res) => {
     const {tenant_ID} = req.params
     const tenant = await Tenant.findOneAndDelete({tenant_ID})
+    const user = await User.findOneAndDelete({user_Name: tenant_ID})
     res.status(200).json(tenant)
 }
 

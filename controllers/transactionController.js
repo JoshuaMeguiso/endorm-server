@@ -118,7 +118,11 @@ const createTransaction = async(req, res) => {
 const deleteTransaction = async(req,res) => {
     const {id} = req.params
     const transaction = await Transaction.findOneAndDelete({_id: id})
-    res.status(200).json(transaction)
+    const tenant = await Tenant.find({tenant_ID: transaction.tenant_ID})
+    const tenantBalance = parseFloat(tenant[0].balance) - parseFloat(transaction.true_Amount)
+    const tenantUpdate = await Tenant.findOneAndUpdate({tenant_ID: transaction.tenant_ID},{balance: tenantBalance.toString()})
+
+    res.status(200).json(tenantUpdate)
 }
 
 //UPDATE a transaction
