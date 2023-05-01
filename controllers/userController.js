@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const axios = require('axios');
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -67,14 +68,8 @@ const loginDoor = async (req, res) => {
       count++;
     }
     API = API + `&message=${message}`
-    try{
-      const response = await fetch(API, {
-        method: 'POST'
-      });
-    }catch(error){
-      console.log(error.message)
-    }
-    
+    const response = await axios.post(API);
+
     res.status(200).json({messsage: "ok"})
   } catch (error) {
     res.status(400).json({error: error.message})
