@@ -80,7 +80,7 @@ const createTransaction = async(req, res) => {
             res.status(200).json(transaction && tenantUpdate && transactionUpdate)  
         }
 
-        //Send Push Notification
+        /*/Send Push Notification
         const tokenData =  await Token.find({tenant_ID});
         const registrationToken = tokenData[0].token;
         const message = {
@@ -95,20 +95,12 @@ const createTransaction = async(req, res) => {
             console.log('Successfully sent test message:', response);
         } catch (error) {
             console.error('Error:', error);
-        }
+        }*/
         
         //Send to Raspberry Pi > PIC > GSM
         axios.post('http://192.168.254.195:8000/send_string', {
-                command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            }
-        );
-        const json = await response.json()
+            command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
+        });
     } catch (error) {
         res.json({error: error.message})
     }
