@@ -99,8 +99,15 @@ const createTransaction = async(req, res) => {
         
         //Send to Raspberry Pi > PIC > GSM
         axios.post('http://192.168.254.195:8000/send_string', {
-            command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
-        });
+                command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            }
+        );
     } catch (error) {
         res.json({error: error.message})
     }
