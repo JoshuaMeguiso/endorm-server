@@ -47,10 +47,14 @@ const loginDoor = async (req, res) => {
   try {
     const user = await User.door(rfid, room_ID)
     const now = new Date();
-    const currentDate = now.toLocaleDateString();
-    const currentTime = now.toLocaleTimeString();
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Manila',
+      dateStyle: 'short',
+      timeStyle: 'short'
+    })
+    const dateTime = formatter.format(now)
 
-    const message = `This is to inform you that the room has been accessed on ${currentDate} - ${currentTime}`
+    const message = `This is to inform you that the room has been accessed on ${dateTime}`
     let API = `https://api.semaphore.co/api/v4/messages?apikey=${process.env.SMSAPIKEY}&number=`
 
     const tenant = await Tenant.find({room_ID})
