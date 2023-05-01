@@ -102,7 +102,7 @@ const createTransaction = async(req, res) => {
                 command_string: `3|${billMonth}|${total_Amount}|${dueDate}|${tenant[0].contact_Info}\r`
             })
             .then(function (response) {
-                console.log(response);
+                console.log({message: "sent succesfully"});
             })
             .catch(function (error) {
                 console.log(error);
