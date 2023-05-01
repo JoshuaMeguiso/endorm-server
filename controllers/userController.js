@@ -2,7 +2,6 @@ const User = require('../models/userModel')
 const Tenant = require('../models/tenantModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const { response } = require('express')
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
