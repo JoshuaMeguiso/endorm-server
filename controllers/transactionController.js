@@ -4,6 +4,7 @@ const Tenant = require('../models/tenantModel')
 const Room = require('../models/roomModel')
 const Payment = require('../models/paymentModel')
 const Token = require('../models/tokenModel')
+const axios = require("axios")
 
 //Firebase Database
 var admin = require("firebase-admin");
@@ -45,6 +46,7 @@ const createTransaction = async(req, res) => {
         const total_Amount = parseFloat(room_Rate) + parseFloat(water_Charge) + parseFloat(individual_Consume)
         const checkBalance =  parseFloat(total_Amount) + parseFloat(tenant[0].balance)
         const date = new Date(start_Month);
+        const billMonth = date.toLocaleString('en-US', { month: 'long' });
         date.setMonth(date.getMonth() + 1);
         const dueDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         
@@ -79,7 +81,7 @@ const createTransaction = async(req, res) => {
         }
 
         //Send Push Notification
-        const tokenData =  await Token.find({});
+        const tokenData =  await Token.find({tenant_ID});
         const registrationToken = tokenData[0].token;
         const message = {
             notification: {
@@ -94,6 +96,11 @@ const createTransaction = async(req, res) => {
         } catch (error) {
             console.error('Error:', error);
         }
+        
+        /*/Send SMS API
+        const messageAPI = `Hello! Your Statement of Account for the month of ${billMonth} is now available. The amount due is ${total_Amount} pesos and the due date is ${dueDate}. To avaoid any issue, please make sure to pay before or on the due date. You can visit the Endorm application for more information.`
+        const API = `https://api.semaphore.co/api/v4/messages?apikey=${process.env.SMSAPIKEY}&number=0${tenant[0].contact_Info.slice(3)}&message=${message}`
+        const response = await axios.post(API);*/
     } catch (error) {
         res.json({error: error.message})
     }

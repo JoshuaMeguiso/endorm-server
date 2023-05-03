@@ -14,9 +14,14 @@ const createToken = async(req, res) => {
 
 //UPDATE a Token
 const updateToken = async(req,res) => {
-    const {token} = req.params
-    const data = await Token.findOneAndUpdate({tenant_ID}, {token})
-    res.status(200).json(data)
+    try {
+        const {token,tenant_ID} = req.body
+        const data = await Token.findOneAndUpdate({tenant_ID}, {token})
+        res.status(200).json(data)
+    }catch{
+        res.json({error: error.message})
+    }
+    
 }
 
 
