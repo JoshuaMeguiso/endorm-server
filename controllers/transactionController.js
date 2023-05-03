@@ -4,7 +4,6 @@ const Tenant = require('../models/tenantModel')
 const Room = require('../models/roomModel')
 const Payment = require('../models/paymentModel')
 const Token = require('../models/tokenModel')
-const axios = require('axios');
 
 //Firebase Database
 var admin = require("firebase-admin");
@@ -46,7 +45,6 @@ const createTransaction = async(req, res) => {
         const total_Amount = parseFloat(room_Rate) + parseFloat(water_Charge) + parseFloat(individual_Consume)
         const checkBalance =  parseFloat(total_Amount) + parseFloat(tenant[0].balance)
         const date = new Date(start_Month);
-        const billMonth = date.toLocaleString('en-US', { month: 'long' });
         date.setMonth(date.getMonth() + 1);
         const dueDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         
@@ -80,8 +78,8 @@ const createTransaction = async(req, res) => {
             res.status(200).json(transaction && tenantUpdate && transactionUpdate)  
         }
 
-        /*/Send Push Notification
-        const tokenData =  await Token.find({tenant_ID});
+        //Send Push Notification
+        const tokenData =  await Token.find({});
         const registrationToken = tokenData[0].token;
         const message = {
             notification: {
@@ -95,7 +93,7 @@ const createTransaction = async(req, res) => {
             console.log('Successfully sent test message:', response);
         } catch (error) {
             console.error('Error:', error);
-        }*/
+        }
     } catch (error) {
         res.json({error: error.message})
     }
