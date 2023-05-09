@@ -45,7 +45,7 @@ const loginDoor = async (req, res) => {
   const { rfid } = req.body
 
   try {
-    const user = await User.door(rfid, room_ID)
+    await User.door(rfid, room_ID)
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', {
       timeZone: 'Asia/Manila',

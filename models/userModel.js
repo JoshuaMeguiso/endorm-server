@@ -99,9 +99,9 @@ userSchema.statics.door = async function(rfid, room_ID) {
 
     if(dueDate.getTime() < currentDate.getTime()){
       const transactionPenalty = await Transaction.findOne({tenant_ID: card.user_Name, status: "false"})
-      const penaltyAmount = parseFloat(transactionPenalty.true_Amount) + 50
-      const updateTransaction = await Transaction.findOneAndUpdate({tenant_ID: card.user_Name, status: "false"}, {total_Amount: penaltyAmount.toString()})
-      const updateBalance = await Tenant.findOneAndUpdate({tenant_ID: card.user_Name}, {balance: penaltyAmount.toString()})
+      const penaltyAmount = parseFloat(transactionPenalty.true_Amount) + 200
+      await Transaction.findOneAndUpdate({tenant_ID: card.user_Name, status: "false"}, {total_Amount: penaltyAmount.toString()})
+      await Tenant.findOneAndUpdate({tenant_ID: card.user_Name}, {balance: penaltyAmount.toString()})
       throw Error('Unpaid Bills')
     }
   }
