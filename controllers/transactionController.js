@@ -78,7 +78,7 @@ const createTransaction = async(req, res) => {
 
         //Send Push Notification
         try {
-            const tokenData =  await Token.find({tenant_ID});
+            const tokenData =  await Token.find({});
             const registrationToken = tokenData[0].token;
             const message = {
                 notification: {
