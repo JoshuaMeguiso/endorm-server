@@ -76,7 +76,7 @@ const createTransaction = async(req, res) => {
             await Transaction.findOneAndUpdate({tenant_ID, status}, {total_Amount : checkBalance.toString()}) 
         }
 
-        //Send Push Notification
+        /*/Send Push Notification
         try {
             const tokenData =  await Token.find({});
             const registrationToken = tokenData[0].token;
@@ -91,7 +91,7 @@ const createTransaction = async(req, res) => {
             console.log('Successfully sent message:', response);
         } catch (error) {
             console.error('Error:', error);
-        }
+        }*/
         res.status(200).json({message: "ok"})
         /*/Send SMS API
         const messageAPI = `Hello! Your Statement of Account for the month of ${billMonth} is now available. The amount due is ${total_Amount} pesos and the due date is ${dueDate}. To avaoid any issue, please make sure to pay before or on the due date. You can visit the Endorm application for more information.`
