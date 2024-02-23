@@ -2,12 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
-const userRoutes = require("./routes/userRoute");
-const tenantRoutes = require("./routes/tenantRoute");
-const roomRoutes = require("./routes/roomRoute");
-const transactionRoutes = require("./routes/transactionRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
-const tokenRoutes = require("./routes/tokenRoute");
 
 // express app
 const app = express();
@@ -16,12 +10,8 @@ const app = express();
 app.use(express.json());
 
 // routes
-app.use("/tenant", tenantRoutes);
-app.use("/user", userRoutes);
-app.use("/room", roomRoutes);
-app.use("/transaction", transactionRoutes);
-app.use("/payment", paymentRoutes);
-app.use("/token", tokenRoutes);
+app.use("/user", require("./routes/users"));
+app.use("/transaction", require("./routes/transactions"));
 
 mongoose
   .connect(process.env.MONGO_URI)
