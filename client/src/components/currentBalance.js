@@ -1,13 +1,12 @@
+const currentBalance = ({ state }) => {
+  const balanceConverted = parseFloat(state.balance);
+  return (
+    <div className="tenant-details">
+      <p>
+        <strong>Balance: ₱ {balanceConverted.toFixed(2)}</strong>
+      </p>
+    </div>
+  );
+};
 
-const currentBalance = ({tenant}) => { 
-    const balanceConverted = parseFloat(tenant.balance);
-    return(
-        <div className="tenant-details">
-            <p>
-                <strong>Amount Payable: ₱ {balanceConverted.toFixed(2)}</strong>
-            </p>
-        </div>
-    )
-}
-
-export default currentBalance
+export default currentBalance;

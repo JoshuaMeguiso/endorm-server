@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const transactionSchema = new Schema(
   {
     user_id: Number,
+    trans_id: Number,
     date: Date,
     amount: Number,
   },

@@ -1,57 +1,67 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import TransactionDetails from '../components/transactionDetails'
-import { useAuthContext } from '../hooks/useAuthContext'
-import { useHistoryContext } from  '../hooks/useHistoryContext'
+import TransactionDetails from "../components/transactionDetails";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useHistoryContext } from "../hooks/useHistoryContext";
+import axios from "axios";
 
 const Transaction = () => {
-    const { history, dispatch } = useHistoryContext()
-    const [loading, setLoading] = useState(false);
-    const { user } = useAuthContext()
+  const [state, setState] = useState({});
+  const [records, setRecords] = useState([]);
+  const { history, dispatch } = useHistoryContext();
+  const [loading, setLoading] = useState(false);
+  const { user } = useAuthContext();
 
-    useEffect(() => {
-        const fetchTransactions = async () => {
-            setLoading(true);
-            const response = await fetch(`/payment/${user.user_Name}`)
-            const json = await response.json()
-
-            if(response.ok){
-                dispatch({type: 'SET_HISTORY', payload: json})
-                setLoading(false);
-            }
+  useEffect(() => {
+    axios
+      .get(`/user/uid/${user}`)
+      .then((response) => {
+        if (response.data) {
+          setState(response.data);
         }
-        fetchTransactions();
-        // eslint-disable-next-line
-    }, [])
-    return (
-        <>
-            {!history && loading ? (
-                <div className="loader-container">
-                <div className="spinner"></div>
-                </div>
-            ) : (
-                <>
-                    {history && (
-                        <>
-                            {!history[0] && (
-                                <div className='tenant-details'>
-                                    <p><strong>No History of Transaction</strong></p>
-                                </div>
-                            )}
-                        </>
-                    )}
-                </>
-            )}
-            {history && history.map((payment)=> (
-                <div key={payment._id}>
-                    <TransactionDetails 
-                        key={payment._id} 
-                        payment={payment} 
-                    />
-                </div>
-            ))}
-        </>
-    )
-} 
+      })
+      .catch((err) => console.log(err));
+    return () => {};
+  }, []);
 
-export default Transaction
+  useEffect(() => {
+    if (state._id) {
+      axios
+        .get(`/transaction/all/${state.user_id}`)
+        .then((response) => {
+          if (response.data) {
+            setRecords(response.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    return () => {};
+  }, [state.user_id]);
+
+  return (
+    <form>
+      {loading && (
+        <div className="loader-container">
+          <div className="spinner"></div>
+        </div>
+      )}
+      {records.length === 0 ? (
+        <div className="tenant-details">
+          <p>
+            <strong>No History of Transaction</strong>
+          </p>
+        </div>
+      ) : (
+        <>
+          {records.map((record, index) => (
+            <div key={`transaction-${index}`}>
+              <TransactionDetails key={`trans_${index}`} record={record} />
+            </div>
+          ))}
+        </>
+      )}
+    </form>
+  );
+};
+
+export default Transaction;

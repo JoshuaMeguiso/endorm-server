@@ -1,64 +1,34 @@
-import { add, format } from 'date-fns'
+import { add, format } from "date-fns";
 
-const tenantDetails = ({ tenant }) => {
-    return(
-        <div className="tenant-details">
-            <p>
-                <strong>
-                    Tenant Name &emsp;&emsp;&emsp;&ensp; :&emsp;
-                </strong> 
-                {tenant.first_Name} {tenant.last_Name}
-            </p>
-            <p>
-                <strong>
-                    Room ID&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; :&emsp;
-                </strong>
-                {tenant.room_ID}
-            </p>
-            <p>
-                <strong>
-                    Birthday &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; :&emsp;
-                </strong>
-                {format ( new Date(tenant.birth_Date), 'MMMM dd, Y')}
-            </p>
-            <p>
-                <strong>
-                    Contact Information&nbsp; :&emsp;
-                </strong>
-                {tenant.contact_Info}
-            </p>
-            <p>
-                <strong>
-                    Emergency Number&ensp; :&emsp;
-                </strong>
-                {tenant.emergency_Num}
-            </p>
-            <p>
-                <strong>
-                    Address &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;:&emsp;
-                </strong>
-                {tenant.address}
-            </p>
-            <p>
-                <strong>
-                    Start of Term &emsp;&emsp;&emsp;&emsp; :&emsp;
-                </strong>
-                {format ( new Date(tenant.start_Term), 'MMMM dd, Y')}
-            </p>
-            <p>
-                <strong>
-                    Lease of Term &emsp;&emsp;&emsp;&ensp;&nbsp;&nbsp;:&emsp;
-                </strong>
-                {tenant.lease_Term} Months
-            </p>
-            <p>
-                <strong>
-                    End of Term &emsp;&emsp;&emsp;&emsp;&ensp;&nbsp; :&emsp;
-                </strong>
-                {format(add(new Date(tenant.start_Term), {months: tenant.lease_Term}), 'MMMM, dd, Y')}
-            </p>
-        </div>
-    )
-}
+const tenantDetails = ({ state }) => {
+  return (
+    <div className="tenant-details">
+      <p>
+        <strong>Name:</strong>
+        <span style={{ float: "right" }}>{state.name}</span>
+      </p>
+      <p>
+        <strong>Address:</strong>
+        <span style={{ float: "right" }}>{state.address}</span>
+      </p>
+      <p>
+        <strong>Motorcycle Brand:</strong>
+        <span style={{ float: "right" }}>{state.motorcycle_brand}</span>
+      </p>
+      <p>
+        <strong>Motorcycle Name:</strong>
+        <span style={{ float: "right" }}>{state.motorcycle_name}</span>
+      </p>
+      <p>
+        <strong>Plate Number:</strong>
+        <span style={{ float: "right" }}>{state.plate_no}</span>
+      </p>
+      <p>
+        <strong>Contact Number:</strong>
+        <span style={{ float: "right" }}>{state.contact_no}</span>
+      </p>
+    </div>
+  );
+};
 
-export default tenantDetails
+export default tenantDetails;

@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "server": "npx nodemon",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -21,5 +23,8 @@
     "mongoose": "^6.8.4",
     "twilio": "^4.7.2",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

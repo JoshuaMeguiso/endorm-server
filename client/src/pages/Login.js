@@ -1,65 +1,45 @@
-import { useState } from "react"
-import { useLogin } from "../hooks/useLogin"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLoginCard } from "../hooks/useLoginCard";
+import axios from "axios";
 
-const Login = () => {
-    const [userName, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const { login, error, isLoading } =  useLogin()
-    const navigate = useNavigate();
+const LoginCard = () => {
+  const navigate = useNavigate();
+  const { loginCard, error, isLoading } = useLoginCard();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://127.0.0.1:8000/uid")
+  //       .then((response) => {
+  //         if (response.data) {
+  //           loginCard(response.data);
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //     return () => {};
+  //   }, []);
 
-        await login(userName, password)
-    }
+  return (
+    <form className="login">
+      <h1 style={{ textAlign: "center" }}>WELCOME!</h1>
+      <h1 style={{ textAlign: "center" }}>Tap Card to Start</h1>
+      <div className="logoHome">
+        <i
+          onClick={() => loginCard("123123")}
+          className="fa-regular fa-address-card"
+        ></i>
+      </div>
+      {error && <div className="error">{error}</div>}
 
-    return (
-        <form className="login" onSubmit={handleSubmit}>
-            <h1>
-                Log In
-            </h1>
-            <label>
-                <h2>
-                    User Name: 
-                </h2>
-            </label>
-            <input 
-                type="username" 
-                onChange={(e) => setUsername(e.target.value)} 
-                value={userName} 
-            />
-            <label>
-                <h2>
-                    Password: 
-                </h2>
-            </label>
-            <input 
-                type="password" 
-                onChange={(e) => setPassword(e.target.value)} 
-                value={password} 
-            />
-            {error && <div className="error">{error}</div>}
-            <button className="btnPassword" disabled={isLoading}>
-                <strong>
-                    Log in
-                </strong>
-            </button>
-            <button className="btnPassword" type="button" onClick={() => navigate("/card")}>
-                <strong>
-                    Use ID Card
-                </strong>
-            </button>
+      {isLoading ? (
+        <div className="loginLoader-container">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        ""
+      )}
+    </form>
+  );
+};
 
-            {isLoading ? (
-                <div className="loginLoader-container">
-                <div className="spinner"></div>
-                </div>
-            ) : (
-                ""
-            )}
-        </form>
-    )
-}
-
-export default Login
+export default LoginCard;

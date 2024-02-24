@@ -18,6 +18,12 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+router.get("/all/:id", (req, res) => {
+  Model.find({ user_id: req.params.id })
+    .then((records) => res.status(200).json(records))
+    .catch((err) => res.status(400).json(err));
+});
+
 router.get("/:id", (req, res) => {
   Model.findById(req.params.id)
     .then((records) => res.status(200).json(records))
