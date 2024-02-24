@@ -7,17 +7,17 @@ const LoginCard = () => {
   const navigate = useNavigate();
   const { loginCard, error, isLoading } = useLoginCard();
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://127.0.0.1:8000/uid")
-  //       .then((response) => {
-  //         if (response.data) {
-  //           loginCard(response.data);
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //     return () => {};
-  //   }, []);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/uid")
+      .then((response) => {
+        if (response.data) {
+          loginCard(response.data);
+        }
+      })
+      .catch((err) => console.log(err));
+    return () => {};
+  }, []);
 
   return (
     <form className="login">
