@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-//Context
-import { useTenantsContext } from "../hooks/useTenantsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 //components

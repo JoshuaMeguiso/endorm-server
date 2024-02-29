@@ -4,15 +4,16 @@
 
 /* layout */
 :root {
-  --primary: #1aac83;
+  --primary: #2ecc71; /* Green color */
   --error: #e7195a;
 }
 body {
   margin-left: 25%;
   padding: 10px;
   user-zoom: fixed;
-  background-color:blanchedalmond;
+  background-color: #2073b8; /* Light background */
   font-family: "Poppins";
+  
 }
 
 /*Header css*/
@@ -23,14 +24,14 @@ header {
   left: 0;
   width: 25%;
   height: 100%;
-  background: rgb(51, 110, 144);
+  background: #27ae60; /* Green background */
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: left;
 }
 header .hideHeader{
-  background:blanchedalmond;
+  background: #094402; /* Light background */
   padding-bottom: 1000px;
 }
 header .container {
@@ -43,9 +44,12 @@ header .container {
   justify-content: left;
 }
 header a {
-  color: #333;
+  color: #fff; /* White text */
   text-decoration: none;
 }
+
+
+
 
 /*Label and Input css*/
 label, input {
@@ -63,6 +67,8 @@ input {
   box-sizing: border-box;
 }
 
+/* Rest of your CSS... */
+
 .pages{
   max-width: 1400px;
   padding: 20px;
@@ -70,93 +76,96 @@ input {
 }
 
 /*Button css*/
-.btnNavBar {
-  font-size: 2rem;
-  width: 250px;
-  height: 150px;
-  line-height: 1%;
-  padding: 10px 25px 30px;
-  margin-bottom: 20px;
-  border-radius: 20px;
-  font-family: "Poppins";
-  background-color: white;
-  color: rgb(51, 110, 144);
-  border: 5px solid white;
-}
-.btnPassword{
-  font-size: 1.5rem;
-  border: none;
-  outline: none;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border-radius: 10px;
-  font-family: "Poppins";
-  background-color: rgb(51, 110, 144);
-  color: white;
-}
-.smallBtn{
-  font-size: 1.5rem;
-  border: none;
-  outline: none;
-  padding: 10px;
-  margin: 0px 18px;
-  width: 44%;
-  border-radius: 10px;
-  font-family: "Poppins";
-  background-color: rgb(51, 110, 144);
-  color: white;
-}
-.btnPay{
-  width: 42%;
-  font-size: 1.6rem;
-  border: none;
-  outline: none;
-  margin: 0px 35px;
-  padding: 20px 50px;
-  border-radius: 20px;
-  font-family: "Poppins";
-  background-color: rgb(51, 110, 144);
-  color: white;
-}
-.btnNavBar:hover {
-  transform: scale(0.95);
-  transition-duration: 0.2s;
-  opacity: 0.90;
-}
-.btnPassword:hover {
-  transform: scale(0.95);
-  transition-duration: 0.2s;
-  opacity: 0.90;
-}
-.smallBtn:hover {
-  transform: scale(0.95);
-  transition-duration: 0.2s;
-  opacity: 0.90;
-}
-.btnPay:hover {
-  transform: scale(0.95);
-  transition-duration: 0.2s;
-  opacity: 0.90;
-}
+  .btnNavBar {
+    font-size: 2rem;
+    width: 250px;
+    height: 150px;
+    line-height: 1%;
+    padding: 10px 25px 30px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    font-family: "Poppins";
+    background-color: rgb(18, 105, 40);
+    color: rgb(255, 255, 255);
+    border: 5px solid rgb(20, 192, 49);
+  }
+  .btnPassword{
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    padding: 15px; /* Adjusted padding */
+    margin-top: 20px; /* Adjusted margin */
+    width: 80%; /* Adjusted width */
+    border-radius: 10px;
+    font-family: "Poppins";
+    background-color: rgb(18, 105, 40);
+    color: white;
+  }
+  .smallBtn{
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    padding: 15px; /* Adjusted padding */
+    margin: 20px; /* Adjusted margin */
+    width: 40%; /* Adjusted width */
+    border-radius: 10px;
+    font-family: "Poppins";
+    background-color: rgb(18, 105, 40);
+    color: white;
+  }
+  .btnPay {
+    width: 42%;
+    font-size: 1.6rem;
+    border: none;
+    outline: none;
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px 50px;
+    border-radius: 20px;
+    font-family: "Poppins";
+    background-color: rgb(18, 105, 40);
+    color: white;
+  }
+  
+  
+  
+  .btnNavBar:hover {
+    transform: scale(0.95);
+    transition-duration: 0.2s;
+    opacity: 0.90;
+  }
+  .btnPassword:hover {
+    transform: scale(0.95);
+    transition-duration: 0.2s;
+    opacity: 0.90;
+  }
+  .smallBtn:hover {
+    transform: scale(0.95);
+    transition-duration: 0.2s;
+    opacity: 0.90;
+  }
+  .btnPay:hover {
+    transform: scale(0.95);
+    transition-duration: 0.2s;
+    opacity: 0.90;
+  }
 
 /*Home css*/
 .containerLogo{
-  background: #fff;
-  border-radius: 300px;
-  margin: 20px;
+  background: rgb(18, 105, 40);
+  /* Remove or reduce border-radius for a rectangular shape */
+  /* border-radius: 300px; */
+  margin: 200px;
   padding: 20px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
 .logoHome{
-  font-size: 15rem;
-  color: rgb(51, 110, 144);
+  font-size: 10rem;
+  color: rgb(255, 255, 255);
   text-align: center;
 }
 .logoText{
   font-size: 2.5rem;
-  color: rgb(51, 110, 144);
+  color: rgb(255, 255, 255);
   text-align: center;
 }
 
@@ -168,12 +177,14 @@ input {
   align-items: center;
   justify-content: center;
   font-family: "Poppins";
-  color: #555;
+  color: #ffffff;
 }
 
+
+/*Tenant Details css*/
 /*Tenant Details css*/
 .tenant-details {
-  background: #fff;
+  background: rgb(18, 105, 40);
   border-radius: 20px;
   margin: 20px 25px;
   padding: 20px;
@@ -186,10 +197,10 @@ input {
   margin-right: 5%;
   font-size: 1rem;
   line-height: 20px;
-  color: #555;
+  color: #ffffff;
 }
 .tenant-details .fixed {
-  background: #fff;
+  background: #000000;
   border-radius: 20px;
   margin: 20px 25px;
   padding: 20px;
@@ -205,8 +216,9 @@ input {
   margin-left: 5%;
   font-size: 1.9em;
   line-height: 20px;
-  color: #555;
+  color: #ffffff;
 }
+
 
 /*Login css*/
 form.login {
@@ -216,12 +228,12 @@ form.login {
   max-width: 400px;
   margin: 40px 40px;
   padding: 40px 60px 10px;
-  background: #fff;
+  background: rgb(18, 105, 40);
   border-radius: 20px;
   font-family: "Poppins";
-  color: #555;
+  color: #ffffff;
   line-height: 2%;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(233, 0, 0, 0.05);
 }
 div.error {
   padding: 10px;
@@ -257,7 +269,7 @@ div.error {
   width: 64px;
   height: 64px;
   border: 8px solid;
-  border-color: #336e90 transparent #336e90 transparent;
+  border-color: #21be3b transparent #336e90 transparent;
   border-radius: 50%;
   animation: spin-anim 1.2s linear infinite;
 }
@@ -362,66 +374,45 @@ div.error {
 
 @keyframes rotate-circle {
   0% {
-      transform: rotate(-45deg);
-  }
-  5% {
-      transform: rotate(-45deg);
-  }
-  12% {
-      transform: rotate(-405deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(-405deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes icon-line-tip {
   0% {
-      width: 0;
-      left: 1px;
-      top: 19px;
+    width: 0;
+    left: 1px;
+    top: 19px;
   }
-  54% {
-      width: 0;
-      left: 1px;
-      top: 19px;
-  }
-  70% {
-      width: 50px;
-      left: -8px;
-      top: 37px;
-  }
-  84% {
-      width: 17px;
-      left: 21px;
-      top: 48px;
+  50% {
+    width: 50px;
+    left: -5px;
+    top: 25px;
   }
   100% {
-      width: 25px;
-      left: 14px;
-      top: 45px;
+    width: 25px;
+    left: 14px;
+    top: 45px;
   }
 }
 
 @keyframes icon-line-long {
   0% {
-      width: 0;
-      right: 46px;
-      top: 54px;
+    width: 0;
+    right: 46px;
+    top: 54px;
   }
-  65% {
-      width: 0;
-      right: 46px;
-      top: 54px;
-  }
-  84% {
-      width: 55px;
-      right: 0px;
-      top: 35px;
+  50% {
+    width: 55px;
+    right: 20px;
+    top: 44px;
   }
   100% {
-      width: 47px;
-      right: 8px;
-      top: 38px;
+    width: 47px;
+    right: 8px;
+    top: 38px;
   }
 }
