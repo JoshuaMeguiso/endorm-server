@@ -1,16 +1,15 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-
-//components
-import TenantDetails from "../components/tenantDetails";
-import CurrentBalance from "../components/currentBalance";
 import Loading from "../components/Loading";
-import axios from "axios";
+import TenantDetails from "../components/TenantDetails";
+import CurrentBalance from "../components/currentBalance";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Profile = () => {
   const [state, setState] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -20,23 +19,24 @@ const Profile = () => {
       .get(`/user/uid/${user}`)
       .then((response) => {
         if (response.data) {
+          setLoading(false);
           setState(response.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        setError(
+          "Unable to connect to the server. Please contact tech support"
+        );
+      });
     return () => {};
   }, []);
-
-  useEffect(() => {
-    if (state?._id) {
-      setLoading(false);
-    }
-    return () => {};
-  }, [state]);
 
   return (
     <form>
       <Loading loading={loading} />
+      {error && <div className="error">{error}</div>}
       {state && (
         <div key={`div-user`}>
           <TenantDetails key={`details`} state={state} />
@@ -44,7 +44,7 @@ const Profile = () => {
         </div>
       )}
       <button className="btnPay" onClick={() => navigate("setting")}>
-        <i className="fa-solid fa-gear"></i> <strong> Setting</strong>
+        <i className="fa-solid fa-gear"></i> <strong> Edit Profile</strong>
       </button>
     </form>
   );

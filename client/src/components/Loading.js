@@ -1,7 +1,7 @@
-const Loading = ({ loading }) => {
+const Loading = ({ loading, className = "loader-container" }) => {
   if (loading) {
     return (
-      <div className="loader-container">
+      <div className={className}>
         <div className="spinner"></div>
       </div>
     );

@@ -1,6 +1,6 @@
 import { add, format } from "date-fns";
 
-const tenantDetails = ({ state }) => {
+const TenantDetails = ({ state }) => {
   return (
     <div className="tenant-details">
       <p>
@@ -31,4 +31,4 @@ const tenantDetails = ({ state }) => {
   );
 };
 
-export default tenantDetails;
+export default TenantDetails;

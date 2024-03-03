@@ -9,7 +9,7 @@ import Transaction from "./pages/Transaction";
 import Setting from "./pages/Setting";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
-import Pay from "./pages/Pay";
+import TopUp from "./pages/TopUp";
 import Print from "./pages/Print";
 import RegisterCard from "./pages/RegisterCard";
 
@@ -50,7 +50,10 @@ function App() {
               path="/profile/card"
               element={user ? <RegisterCard /> : <Navigate to="/" />}
             />
-            <Route path="/pay" element={user ? <Pay /> : <Navigate to="/" />} />
+            <Route
+              path="/pay"
+              element={user ? <TopUp /> : <Navigate to="/" />}
+            />
             <Route
               path="/statement/print"
               element={user ? <Print /> : <Navigate to="/" />}

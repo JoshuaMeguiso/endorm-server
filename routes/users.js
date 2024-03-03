@@ -20,7 +20,6 @@ router.get("/", (req, res) => {
 
 //Sign In using RFID
 router.get("/uid/:id", (req, res) => {
-  console.log(req.params.id);
   Model.findOne({ uid_key: req.params.id })
     .then((records) => res.status(200).json(records))
     .catch((err) => res.status(400).json(err));

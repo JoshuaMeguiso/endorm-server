@@ -11,7 +11,7 @@ body {
   margin-left: 25%;
   padding: 10px;
   user-zoom: fixed;
-  background-color: #2073b8; /* Light background */
+  background-color: #094402; /* Light background */
   font-family: "Poppins";
   
 }
@@ -110,15 +110,28 @@ input {
     width: 40%; /* Adjusted width */
     border-radius: 10px;
     font-family: "Poppins";
-    background-color: rgb(18, 105, 40);
+    background-color: #27ae60;
+    color: white;
+  }
+
+  .full-width-btn{
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    padding: 15px; /* Adjusted padding */
+    margin: 0, auto; /* Adjusted margin */
+    width: 100%; /* Adjusted width */
+    border-radius: 10px;
+    font-family: "Poppins";
+    background-color: #27ae60;
     color: white;
   }
   .btnPay {
-    width: 42%;
+    width: 95.5%;
     font-size: 1.6rem;
     border: none;
     outline: none;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 25px; /* Center horizontally */
     padding: 20px 50px;
     border-radius: 20px;
     font-family: "Poppins";
@@ -139,6 +152,11 @@ input {
     opacity: 0.90;
   }
   .smallBtn:hover {
+    transform: scale(0.95);
+    transition-duration: 0.2s;
+    opacity: 0.90;
+  }
+  .full-width-btn:hover {
     transform: scale(0.95);
     transition-duration: 0.2s;
     opacity: 0.90;
@@ -227,7 +245,7 @@ form.login {
   flex-direction: column;
   max-width: 400px;
   margin: 40px 40px;
-  padding: 40px 60px 10px;
+  padding: 40px 100px 20px;
   background: rgb(18, 105, 40);
   border-radius: 20px;
   font-family: "Poppins";
@@ -241,7 +259,7 @@ div.error {
   border: 1px solid var(--error);
   color: var(--error);
   border-radius: 4px;
-  margin: 20px 0;
+  margin: 0, 0, 20px, 0;
 }
 
 /*Loading Animation*/
