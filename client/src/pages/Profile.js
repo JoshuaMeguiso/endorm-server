@@ -8,6 +8,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 //components
 import TenantDetails from "../components/tenantDetails";
 import CurrentBalance from "../components/currentBalance";
+import Loading from "../components/Loading";
 import axios from "axios";
 
 const Profile = () => {
@@ -17,6 +18,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/user/uid/${user}`)
       .then((response) => {
@@ -28,15 +30,16 @@ const Profile = () => {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    if (state?._id) {
+      setLoading(false);
+    }
+    return () => {};
+  }, [state]);
+
   return (
-    <>
-      {!state && loading ? (
-        <div className="loader-container">
-          <div className="spinner"></div>
-        </div>
-      ) : (
-        ""
-      )}
+    <form>
+      <Loading loading={loading} />
       {state && (
         <div key={`div-user`}>
           <TenantDetails key={`details`} state={state} />
@@ -46,7 +49,7 @@ const Profile = () => {
       <button className="btnPay" onClick={() => navigate("setting")}>
         <i className="fa-solid fa-gear"></i> <strong> Setting</strong>
       </button>
-    </>
+    </form>
   );
 };
 
