@@ -4,7 +4,7 @@ const Home = () => {
             <div className="logoHome">
                 <i className="fa-solid fa-money-bills"></i>
                 <div className="logoText">
-                    <strong>Welcome to EnDorm Pay</strong>
+                    <strong>Welcome User</strong>
                 </div>
             </div>
         </div>
