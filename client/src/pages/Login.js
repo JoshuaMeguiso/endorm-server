@@ -18,20 +18,20 @@ const LoginCard = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    loginCard(uid_key);
-    // axios
-    //   .get("http://127.0.0.1:8000/uid")
-    //   .then((response) => {
-    //     setLoading(false);
-    //     if (response.data) {
-    //       loginCard(response.data);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     console.log(err);
-    //     setError("Login Failed, Please Try Again");
-    //   });
+    // loginCard(uid_key);
+    axios
+      .get("http://127.0.0.1:8000/uid")
+      .then((response) => {
+        setLoading(false);
+        if (response.data) {
+          loginCard(response.data);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        setError("Login Failed, Please Try Again");
+      });
   };
 
   return (
