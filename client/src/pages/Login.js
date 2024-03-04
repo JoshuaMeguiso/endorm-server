@@ -10,7 +10,7 @@ const LoginCard = () => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
   const [error, setError] = useState("");
-  const [uid_key, setUidKey] = useState("123123");
+  const [uid_key, setUidKey] = useState("");
   const { dispatch } = useAuthContext();
   const { loginCard, new_user, setNewUser, isLoading } = useLoginCard();
 
@@ -24,6 +24,7 @@ const LoginCard = () => {
       .then((response) => {
         setLoading(false);
         if (response.data) {
+          setUidKey(response.data);
           loginCard(response.data);
         }
       })
